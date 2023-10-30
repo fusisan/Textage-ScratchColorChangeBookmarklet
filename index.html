@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="ja">
+<style>
+    details {
+        border: 1px solid #aaa;
+        border-radius: 4px;
+        padding: 0.5em 0.5em 0;
+    }
+
+    summary {
+        font-weight: bold;
+        margin: -0.5em -0.5em 0;
+        padding: 0.5em;
+    }
+
+    details[open] {
+        padding: 0.5em;
+    }
+
+    details[open] summary {
+        border-bottom: 1px solid #aaa;
+        margin-bottom: 0.5em;
+    }
+</style>
+
+<head>
+    <meta http-equiv="Content-type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="keywords" content="" />
+    <meta name="description" content="" />
+    <title>TexTageのスクラッチを交互に色分けするやつ</title>
+    <link rel="apple-touch-icon" type="image/png" href="images/apple-touch-icon.png" />
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.2/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+
+</head>
+
+<body>
+    <header>
+        <div class="container">
+            <div class="row">
+                <div class="col-sm-12">
+                    <h1>TexTageのスクラッチを交互に色分けするやつ(Bookmarklet版)</h1>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <div>
+        <div class="container">
+            <details>
+                <summary>使い方</summary>
+                <p>1.任意のページ(このページでも可)をお気に入りに追加します。</p>
+                <p>2.で追加したお気に入りを編集しタイトルを分かりやすいの名前にし、URLを下記のコードに書き換えます。</p>
+                <p>3.TexTageの譜面ページで登録したブックマークレットを実行します。</p>
+            </details>
+            <br />
+        </div>
+    </div>
+
+    <div>
+        <div class="container">
+            <details>
+                <summary>注意点</summary>
+                <p>SP譜面のみ正常に機能します。</p>
+                <p>画像にフィルターをかける形で色を変更しているため、元画像の色が異なるHCNのBSSでは他の場所と異なる色変化になります。</p>
+            </details>
+            <br />
+        </div>
+    </div>
+
+    <div>
+        <div class="container">
+            <div class="row">
+                <div class="col-sm-12">
+                    <form>
+                        <pre
+                            id="code">javascript:function changeScratchColor(){var d=document.querySelectorAll("img");d=Array.from(d);d.sort(function(a,e){var f=a.getBoundingClientRect().bottom;return e.getBoundingClientRect().bottom-f});d.sort(function(a,e){var f=a.getBoundingClientRect().left,h=e.getBoundingClientRect().left;return f-h});var g=0,b=!0,c=0;d.forEach(function(a){if(a.src.toString().endsWith("/s.gif")||a.src.toString().endsWith("/r.gif")||a.src.toString().endsWith("/hhs.gif"))g++,0&lt;c&&(0==c/2%2&&(b=!b),c=0),a.style.filter=b?"invert(100%)":"hue-rotate(300deg)",b=!b;a.src.toString().endsWith("/sm.gif")&&(g++,a.style.filter=0==c%4||3==c%4?b?"invert(100%)":"hue-rotate(300deg)":b?"hue-rotate(300deg)":"invert(100%)",c++)})}changeScratchColor();</pre>
+                        <div class="form-row">
+                            <button class="btn btn-primary" id="btn-copy">コードをコピー</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script type="text/JavaScript">
+
+      $(function () {
+        $('#btn-copy').click(function () {
+        const codeElement = document.getElementById("code");
+        navigator.clipboard.writeText(codeElement.textContent);
+        return false;
+        });
+        });
+    </script>
+</body>
+
+</html>
